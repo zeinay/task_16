@@ -1,12 +1,12 @@
 from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth.models import User
-from rest_framework.test import APIRequestFactory
+from rest_framework.test import APIRequestFactory, force_authenticate
 from restaurants.models import Restaurant
 from .views import (
     RestaurantListView,
     RestaurantDetailView,
-    RestaurantCreateView
+    RestaurantCreateView,
     RestaurantUpdateView,
     RestaurantDeleteView,
 )
@@ -95,8 +95,10 @@ class RestaurantAPITest(TestCase):
     def test_create_view(self):
         create_url = reverse("api-create")
         request = self.factory.post(create_url, data=self.restaurant_data)
-        response1 = RestaurantCreateView.as_view()(request)
-        self.assertEqual(response1.status_code, 201)
+
+        force_authenticate(request, user=self.user)
+        response = RestaurantCreateView.as_view()(request)
+        self.assertEqual(response.status_code, 201)
         self.assertEqual(Restaurant.objects.count(), 3)
 
     def test_restaurant_update_view(self):
