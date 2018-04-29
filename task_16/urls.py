@@ -23,6 +23,7 @@ from api.views import (
     RestaurantDetailView,
     RestaurantUpdateView,
     RestaurantDeleteView,
+    RestaurantCreateView,
 )
 
 urlpatterns = [
@@ -42,6 +43,7 @@ urlpatterns = [
     path('no-access/',views.no_access ,name='no-access'),
 
     path('api/list/', RestaurantListView.as_view(), name='api-list'),
+    path('api/create/', RestaurantCreateView.as_view(), name='api-create'),
     path('api/<int:restaurant_id>/detail/', RestaurantDetailView.as_view(), name='api-detail'),
     path('api/<int:restaurant_id>/update/', RestaurantUpdateView.as_view(), name='api-update'),
     path('api/<int:restaurant_id>/delete/', RestaurantDeleteView.as_view(), name='api-delete'),

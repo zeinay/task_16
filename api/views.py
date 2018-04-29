@@ -23,6 +23,10 @@ class RestaurantDetailView(RetrieveAPIView):
     lookup_url_kwarg = 'restaurant_id'
 
 
+# Complete Me
+class RestaurantCreateView():
+
+
 class RestaurantUpdateView(RetrieveUpdateAPIView):
     queryset = Restaurant.objects.all()
     serializer_class = RestaurantCreateUpdateSerializer

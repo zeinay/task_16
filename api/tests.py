@@ -6,6 +6,7 @@ from restaurants.models import Restaurant
 from .views import (
     RestaurantListView,
     RestaurantDetailView,
+    RestaurantCreateView
     RestaurantUpdateView,
     RestaurantDeleteView,
 )
@@ -90,6 +91,13 @@ class RestaurantAPITest(TestCase):
             response.data
         )
         self.assertEqual(response.status_code, 200)
+
+    def test_create_view(self):
+        create_url = reverse("api-create")
+        request = self.factory.post(create_url, data=self.restaurant_data)
+        response1 = RestaurantCreateView.as_view()(request)
+        self.assertEqual(response1.status_code, 201)
+        self.assertEqual(Restaurant.objects.count(), 3)
 
     def test_restaurant_update_view(self):
         update_url = reverse("api-update", kwargs = {"restaurant_id": self.restaurant_1.id})
